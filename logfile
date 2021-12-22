@@ -1,0 +1,29 @@
+2021-12-22 15:15:06.794 MSK [35214] LOG:  starting PostgreSQL 14.1 on aarch64-apple-darwin21.1.0, compiled by Apple clang version 13.0.0 (clang-1300.0.29.3), 64-bit
+2021-12-22 15:15:06.796 MSK [35214] LOG:  listening on IPv6 address "::1", port 5432
+2021-12-22 15:15:06.796 MSK [35214] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-12-22 15:15:06.796 MSK [35214] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-12-22 15:15:06.800 MSK [35215] LOG:  database system was shut down at 2021-12-22 15:10:06 MSK
+2021-12-22 15:15:06.805 MSK [35214] LOG:  database system is ready to accept connections
+2021-12-22 15:15:41.694 MSK [35235] FATAL:  database "klimenty" does not exist
+2021-12-22 15:16:02.566 MSK [35244] FATAL:  role "root" does not exist
+2021-12-22 15:16:15.513 MSK [35246] FATAL:  database "klimenty" does not exist
+2021-12-22 15:19:39.232 MSK [35288] FATAL:  database "klimenty" does not exist
+2021-12-22 15:23:53.017 MSK [35330] ERROR:  syntax error at or near "dropdb" at character 26
+2021-12-22 15:23:53.017 MSK [35330] STATEMENT:  drop database AutoPortal
+	dropdb AutoPortal
+	dropdb AutoPortal
+	dropdb AutoPortal;
+2021-12-22 15:24:07.509 MSK [35330] ERROR:  database "autoportal" does not exist
+2021-12-22 15:24:07.509 MSK [35330] STATEMENT:  DROP DATABASE AutoPortal;
+2021-12-22 15:24:46.527 MSK [35355] ERROR:  syntax error at or near "/" at character 1
+2021-12-22 15:24:46.527 MSK [35355] STATEMENT:  /l
+	DROP DATABASE AutoPortal;
+2021-12-22 15:24:51.983 MSK [35355] ERROR:  database "autoportal" does not exist
+2021-12-22 15:24:51.983 MSK [35355] STATEMENT:  DROP DATABASE AutoPortal;
+2021-12-22 15:30:39.408 MSK [35355] ERROR:  invalid value for parameter "default_transaction_isolation": "read commited"
+2021-12-22 15:30:39.408 MSK [35355] HINT:  Available values: serializable, repeatable read, read committed, read uncommitted.
+2021-12-22 15:30:39.408 MSK [35355] STATEMENT:  ALTER ROLE admin SET default_transaction_isolation TO 'read commited';
+2021-12-22 15:32:02.001 MSK [35355] ERROR:  syntax error at or near "'AutoPortal'" at character 34
+2021-12-22 15:32:02.001 MSK [35355] STATEMENT:  GRANT ALL PRIVILEGES ON DATABASE 'AutoPortal' to admin;
+2021-12-22 15:32:12.139 MSK [35355] ERROR:  database "autoportal" does not exist
+2021-12-22 15:32:12.139 MSK [35355] STATEMENT:  GRANT ALL PRIVILEGES ON DATABASE AutoPortal to admin;
