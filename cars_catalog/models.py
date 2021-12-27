@@ -20,7 +20,7 @@ class Car(models.Model):
     class Meta:
         ordering = ['Manufacturer', 'Car model', 'Car color']
 
-    def display_genre(self):
+    def display_manufacturer(self):
         """Creates a string for the Manufacturer. This is required to display genre in Admin."""
         return ', '.join([manufacturer.name for manufacturer in self.manufacturer.all()[:3]])
 
