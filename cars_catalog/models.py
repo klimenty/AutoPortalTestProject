@@ -14,11 +14,11 @@ class Car(models.Model):
     manufacturer = models.ForeignKey('Manufacturer', on_delete=models.SET_NULL, null=True)
     # Foreign Key used because car can only have one manufacturer, but manufacturers can have multiple cars
     # Manufacturer as a string rather than object because it hasn't been declared yet in file.
-    car_model = models.ForeignKey('Car model', on_delete=models.SET_NULL, null=True, help_text="Select a car model")
-    car_color = models.ForeignKey('Car color', on_delete=models.SET_NULL, null=True, help_text="Select a car color")
+    car_model = models.ForeignKey('CarModel', on_delete=models.SET_NULL, null=True, help_text="Select a car model")
+    car_color = models.ForeignKey('CarColor', on_delete=models.SET_NULL, null=True, help_text="Select a car color")
 
-    class Meta:
-        ordering = ['Manufacturer', 'Car model', 'Car color']
+    # class Meta:
+    #     ordering = ['Manufacturer', 'CarModel', 'CarColor']
 
     def display_manufacturer(self):
         """Creates a string for the Manufacturer. This is required to display genre in Admin."""
@@ -42,7 +42,7 @@ class CarInstance(models.Model):
     car = models.ForeignKey('Car', on_delete=models.RESTRICT, null=True)
     dealer = models.ForeignKey('Dealer', on_delete=models.RESTRICT, null=True)
     date_of_arrival_to_dealer = models.DateField(null=True, blank=True)
-    dealer_center = models.ForeignKey('Dealer Center', on_delete=models.RESTRICT, null=True)
+    dealer_center = models.ForeignKey('DealerCenter', on_delete=models.RESTRICT, null=True)
     date_of_arrival_to_dealer_center = models.DateField(null=True, blank=True)
 
     def __str__(self):
@@ -85,3 +85,29 @@ class CarColor(models.Model):
     def __str__(self):
         """String for representing the Model object (in Admin site etc.)"""
         return self.name
+
+
+class Dealer(models.Model):
+    """Model representing an Dealer."""
+    dealer_name = models.CharField(max_length=100)
+
+    def get_absolute_url(self):
+        """Returns the url to access a particular dealer instance."""
+        return reverse('dealer-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return '{0}'.format(self.dealer_name)
+
+
+class DealerCenter(models.Model):
+    """Model representing an Manufacturer."""
+    dealer_center_name = models.CharField(max_length=100)
+
+    def get_absolute_url(self):
+        """Returns the url to access a particular dealer center instance."""
+        return reverse('dealer-center-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return '{0}'.format(self.dealer_center_name)
