@@ -17,14 +17,14 @@ class Car(models.Model):
     car_model = models.ForeignKey('CarModel', on_delete=models.SET_NULL, null=True, help_text="Select a car model")
     car_color = models.ForeignKey('CarColor', on_delete=models.SET_NULL, null=True, help_text="Select a car color")
 
-    # class Meta:
-    #     ordering = ['Manufacturer', 'CarModel', 'CarColor']
+    class Meta:
+        ordering = ['manufacturer', 'car_model', 'car_color']
 
-    def display_manufacturer(self):
-        """Creates a string for the Manufacturer. This is required to display genre in Admin."""
-        return ', '.join([manufacturer.name for manufacturer in self.manufacturer.all()[:3]])
+    # def display_manufacturer(self):
+    #     """Creates a string for the Manufacturer. This is required to display genre in Admin."""
+    #     return ', '.join([manufacturer.name for manufacturer in self.manufacturer.all()[:3]])
 
-    display_manufacturer.short_description = 'Manufacturer'
+    # display_manufacturer.short_description = 'Manufacturer'
 
     def get_absolute_url(self):
         """Returns the url to access a particular car instance."""
@@ -32,7 +32,7 @@ class Car(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return self.car_model
+        return str(self.car_model)
 
 
 class CarInstance(models.Model):
@@ -72,7 +72,7 @@ class CarModel(models.Model):
 
     def __str__(self):
         """String for representing the Model object (in Admin site etc.)"""
-        return self.name
+        return '{}'.format(self.name)
 
 
 class CarColor(models.Model):
