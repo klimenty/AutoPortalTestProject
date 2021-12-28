@@ -1,12 +1,25 @@
 from django.db import models
-#Added import
-from django.urls import reverse #To generate URLS by reversing URL patterns
-import uuid  # Required for unique car instances
+# Added import
+from django.urls import reverse  # To generate URLS by reversing URL patterns
 from datetime import date
+
+
 # from django.contrib.auth.models import User #For future user implementation
 
 
 # Create your models here.
+class LowerCharField(models.CharField):
+    """
+    Transform text to lowercase for BD columns and rows, where data must be unique.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(LowerCharField, self).__init__(*args, **kwargs)
+
+    def get_prep_value(self, value):
+        return str(value).lower()
+
+
 class Car(models.Model):
     """
     Model representing a car (but not a specific copy of a car).
@@ -32,13 +45,13 @@ class Car(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return str(self.car_model)
+        return '{}'.format(self.car_model)
 
 
 class CarInstance(models.Model):
     """Model representing a specific copy of a car."""
-    vin = models.UUIDField(primary_key=True, default=uuid.uuid4,
-                          help_text="Unique VIN for this particular car")
+    vin = LowerCharField(max_length=200, default='', help_text="Unique VIN for this particular car")
+    # vin must be unique. "CONSTRAINT unique_vin UNIQUE (vin)" were used to check duplicates on DB level
     car = models.ForeignKey('Car', on_delete=models.RESTRICT, null=True)
     dealer = models.ForeignKey('Dealer', on_delete=models.RESTRICT, null=True)
     date_of_arrival_to_dealer = models.DateField(null=True, blank=True)
@@ -47,7 +60,7 @@ class CarInstance(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return '{0} ({1})'.format(self.vin, self.car.car_model)
+        return '{0}'.format(self.vin)
 
 
 class Manufacturer(models.Model):
@@ -84,7 +97,7 @@ class CarColor(models.Model):
 
     def __str__(self):
         """String for representing the Model object (in Admin site etc.)"""
-        return self.name
+        return '{}'.format(self.name)
 
 
 class Dealer(models.Model):
