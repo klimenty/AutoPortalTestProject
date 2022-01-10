@@ -50,8 +50,7 @@ class Car(models.Model):
 
 class CarInstance(models.Model):
     """Model representing a specific copy of a car."""
-    vin = LowerCharField(max_length=200, default='', help_text="Unique VIN for this particular car")
-    # vin must be unique. "CONSTRAINT unique_vin UNIQUE (vin)" were used to check duplicates on DB level
+    vin = LowerCharField(max_length=200, unique=True, default='', help_text="Unique VIN for this particular car")
     car = models.ForeignKey('Car', on_delete=models.RESTRICT, null=True)
     dealer = models.ForeignKey('Dealer', on_delete=models.RESTRICT, null=True)
     date_of_arrival_to_dealer = models.DateField(null=True, blank=True)
