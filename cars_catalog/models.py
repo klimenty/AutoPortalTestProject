@@ -20,7 +20,7 @@ class LowerCharField(models.CharField):
         return str(value).lower()
 
 
-class Car(models.Model):
+class CarConfiguration(models.Model):
     """
     Model representing a car (but not a specific copy of a car).
     """
@@ -51,7 +51,7 @@ class Car(models.Model):
 class CarInstance(models.Model):
     """Model representing a specific copy of a car."""
     vin = LowerCharField(max_length=200, unique=True, default='', help_text="Unique VIN for this particular car")
-    car = models.ForeignKey('Car', on_delete=models.RESTRICT, null=True)
+    car = models.ForeignKey('CarConfiguration', on_delete=models.RESTRICT, null=True)
     dealer = models.ForeignKey('Dealer', on_delete=models.RESTRICT, null=True)
     date_of_arrival_to_dealer = models.DateField(null=True, blank=True)
     dealer_center = models.ForeignKey('DealerCenter', on_delete=models.RESTRICT, null=True)
