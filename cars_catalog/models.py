@@ -29,6 +29,8 @@ class CarConfiguration(models.Model):
     # Manufacturer as a string rather than object because it hasn't been declared yet in file.
     car_model = models.ForeignKey('CarModel', on_delete=models.SET_NULL, null=True, help_text="Select a car model")
     car_color = models.ForeignKey('CarColor', on_delete=models.SET_NULL, null=True, help_text="Select a car color")
+#    car_configuration_instance = models.ForeignKey('{} {} {}'.format(manufacturer, car_model, car_color),
+#                                                   on_delete=models.SET_NULL, null=False, unique=True)
 
     class Meta:
         ordering = ['manufacturer', 'car_model', 'car_color']
@@ -40,21 +42,21 @@ class CarConfiguration(models.Model):
     # display_manufacturer.short_description = 'Manufacturer'
 
     def get_absolute_url(self):
-        """Returns the url to access a particular car instance."""
+        """Returns the url to access a particular car configuration."""
         return reverse('car-detail', args=[str(self.vin)])
 
     def __str__(self):
         """String for representing the Model object."""
-        return '{}'.format(self.car_model)
+        return '{} {} {}'.format(self.manufacturer, self.car_model, self.car_color)
 
 
 class CarInstance(models.Model):
     """Model representing a specific copy of a car."""
     vin = LowerCharField(max_length=200, unique=True, default='', help_text="Unique VIN for this particular car")
-    car = models.ForeignKey('CarConfiguration', on_delete=models.RESTRICT, null=True)
-    dealer = models.ForeignKey('Dealer', on_delete=models.RESTRICT, null=True)
+    car_configuration = models.ForeignKey('CarConfiguration', on_delete=models.RESTRICT, null=False)
+    dealer = models.ForeignKey('Dealer', on_delete=models.SET_NULL, null=True)
     date_of_arrival_to_dealer = models.DateField(null=True, blank=True)
-    dealer_center = models.ForeignKey('DealerCenter', on_delete=models.RESTRICT, null=True)
+    dealer_center = models.ForeignKey('DealerCenter', on_delete=models.SET_NULL, null=True)
     date_of_arrival_to_dealer_center = models.DateField(null=True, blank=True)
 
     def __str__(self):
@@ -64,7 +66,8 @@ class CarInstance(models.Model):
 
 class Manufacturer(models.Model):
     """Model representing an Manufacturer."""
-    manufacturer_name = models.CharField(max_length=100)
+    manufacturer_name = models.CharField(max_length=100, unique=True,
+                                         help_text="Enter a Manufacturer name (e.g. Suzuki, Mitsubishi, Reno, etc.)")
 
     def get_absolute_url(self):
         """Returns the url to access a particular manufacturer instance."""
@@ -77,10 +80,7 @@ class Manufacturer(models.Model):
 
 class CarModel(models.Model):
     """Model representing a car model (e.g. Duster, Vitara, SX4, etc.)"""
-    name = models.CharField(
-        max_length=200,
-        help_text="Enter a car model (e.g. Duster, Vitara, SX4, etc.)"
-    )
+    name = models.CharField(max_length=200, unique=True, help_text="Enter a car model (e.g. Duster, Vitara, SX4, etc.)")
 
     def __str__(self):
         """String for representing the Model object (in Admin site etc.)"""
@@ -89,10 +89,7 @@ class CarModel(models.Model):
 
 class CarColor(models.Model):
     """Model representing a car color (e.g. Red, Black, Green, etc.)"""
-    name = models.CharField(
-        max_length=200,
-        help_text="Enter a car color (e.g. Red, Black, Green, etc.)"
-    )
+    name = models.CharField(max_length=200, unique=True, help_text="Enter a car color (e.g. Red, Black, Green, etc.)")
 
     def __str__(self):
         """String for representing the Model object (in Admin site etc.)"""
@@ -101,7 +98,7 @@ class CarColor(models.Model):
 
 class Dealer(models.Model):
     """Model representing an Dealer."""
-    dealer_name = models.CharField(max_length=100)
+    dealer_name = models.CharField(max_length=100, unique=True)
 
     def get_absolute_url(self):
         """Returns the url to access a particular dealer instance."""
@@ -114,7 +111,7 @@ class Dealer(models.Model):
 
 class DealerCenter(models.Model):
     """Model representing an Manufacturer."""
-    dealer_center_name = models.CharField(max_length=100)
+    dealer_center_name = models.CharField(max_length=100, unique=True)
 
     def get_absolute_url(self):
         """Returns the url to access a particular dealer center instance."""
