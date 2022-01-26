@@ -1,7 +1,7 @@
 from django.db import models
 # Added import
-from django.urls import reverse  # To generate URLS by reversing URL patterns
-from datetime import date
+# from django.urls import reverse  # To generate URLS by reversing URL patterns
+# from datetime import date
 
 
 # from django.contrib.auth.models import User #For future user implementation
@@ -29,15 +29,13 @@ class CarConfiguration(models.Model):
     # Manufacturer as a string rather than object because it hasn't been declared yet in file.
     car_model = models.ForeignKey('CarModel', on_delete=models.CASCADE, help_text="Select a car model")
     car_color = models.ForeignKey('CarColor', on_delete=models.CASCADE, help_text="Select a car color")
-#    car_configuration_instance = models.CharField('{} {} {}'.format(manufacturer, car_model, car_color),
-#                                                  max_length=200, unique=True)
 
     class Meta:
         ordering = ['manufacturer', 'car_model', 'car_color']
 
-    def get_absolute_url(self):
-        """Returns the url to access a particular car configuration."""
-        return reverse('car-detail', args=[str(self.vin)])
+    # def get_absolute_url(self):
+    #     """Returns the url to access a particular car configuration."""
+    #     return reverse('car-detail', args=[str(self.vin)])
 
     def __str__(self):
         """String for representing the Model object."""
@@ -63,9 +61,9 @@ class Manufacturer(models.Model):
     manufacturer_name = models.CharField(max_length=100, unique=True,
                                          help_text="Enter a Manufacturer name (e.g. Suzuki, Mitsubishi, Reno, etc.)")
 
-    def get_absolute_url(self):
-        """Returns the url to access a particular manufacturer instance."""
-        return reverse('manufacturer-detail', args=[str(self.id)])
+    # def get_absolute_url(self):
+    #     """Returns the url to access a particular manufacturer instance."""
+    #     return reverse('manufacturer-detail', args=[str(self.id)])
 
     def __str__(self):
         """String for representing the Model object."""
@@ -74,29 +72,31 @@ class Manufacturer(models.Model):
 
 class CarModel(models.Model):
     """Model representing a car model (e.g. Duster, Vitara, SX4, etc.)"""
-    name = models.CharField(max_length=200, unique=True, help_text="Enter a car model (e.g. Duster, Vitara, SX4, etc.)")
+    car_model_name = models.CharField(max_length=200, unique=True,
+                                      help_text="Enter a car model (e.g. Duster, Vitara, SX4, etc.)")
 
     def __str__(self):
         """String for representing the Model object (in Admin site etc.)"""
-        return '{}'.format(self.name)
+        return '{0}'.format(self.car_model_name)
 
 
 class CarColor(models.Model):
     """Model representing a car color (e.g. Red, Black, Green, etc.)"""
-    name = models.CharField(max_length=200, unique=True, help_text="Enter a car color (e.g. Red, Black, Green, etc.)")
+    color_name = models.CharField(max_length=200, unique=True,
+                                  help_text="Enter a car color (e.g. Red, Black, Green, etc.)")
 
     def __str__(self):
         """String for representing the Model object (in Admin site etc.)"""
-        return '{}'.format(self.name)
+        return '{0}'.format(self.color_name)
 
 
 class Dealer(models.Model):
     """Model representing an Dealer."""
     dealer_name = models.CharField(max_length=100, unique=True)
 
-    def get_absolute_url(self):
-        """Returns the url to access a particular dealer instance."""
-        return reverse('dealer-detail', args=[str(self.id)])
+    # def get_absolute_url(self):
+    #     """Returns the url to access a particular dealer instance."""
+    #     return reverse('dealer-detail', args=[str(self.id)])
 
     def __str__(self):
         """String for representing the Model object."""
@@ -107,9 +107,9 @@ class DealerCenter(models.Model):
     """Model representing an Manufacturer."""
     dealer_center_name = models.CharField(max_length=100, unique=True)
 
-    def get_absolute_url(self):
-        """Returns the url to access a particular dealer center instance."""
-        return reverse('dealer-center-detail', args=[str(self.id)])
+    # def get_absolute_url(self):
+    #     """Returns the url to access a particular dealer center instance."""
+    #     return reverse('dealer-center-detail', args=[str(self.id)])
 
     def __str__(self):
         """String for representing the Model object."""

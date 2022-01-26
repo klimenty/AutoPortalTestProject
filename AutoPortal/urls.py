@@ -29,7 +29,7 @@ urlpatterns = [
 
 urlpatterns += [
     path('cars_catalog/', include('cars_catalog.urls')),
-    path('', RedirectView.as_view(url='/cars_catalog/', permanent=True)),
+    path('', RedirectView.as_view(url='index', permanent=True)),
     path('spare_parts_catalog/', include('spare_parts_catalog.urls'))
 ]
 
