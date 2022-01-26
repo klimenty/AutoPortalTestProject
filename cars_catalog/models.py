@@ -24,22 +24,16 @@ class CarConfiguration(models.Model):
     """
     Model representing a car (but not a specific copy of a car).
     """
-    manufacturer = models.ForeignKey('Manufacturer', on_delete=models.SET_NULL, null=True)
+    manufacturer = models.ForeignKey('Manufacturer', on_delete=models.CASCADE, help_text="Select a manufacturer")
     # Foreign Key used because car can only have one manufacturer, but manufacturers can have multiple cars
     # Manufacturer as a string rather than object because it hasn't been declared yet in file.
-    car_model = models.ForeignKey('CarModel', on_delete=models.SET_NULL, null=True, help_text="Select a car model")
-    car_color = models.ForeignKey('CarColor', on_delete=models.SET_NULL, null=True, help_text="Select a car color")
-#    car_configuration_instance = models.ForeignKey('{} {} {}'.format(manufacturer, car_model, car_color),
-#                                                   on_delete=models.SET_NULL, null=False, unique=True)
+    car_model = models.ForeignKey('CarModel', on_delete=models.CASCADE, help_text="Select a car model")
+    car_color = models.ForeignKey('CarColor', on_delete=models.CASCADE, help_text="Select a car color")
+#    car_configuration_instance = models.CharField('{} {} {}'.format(manufacturer, car_model, car_color),
+#                                                  max_length=200, unique=True)
 
     class Meta:
         ordering = ['manufacturer', 'car_model', 'car_color']
-
-    # def display_manufacturer(self):
-    #     """Creates a string for the Manufacturer. This is required to display genre in Admin."""
-    #     return ', '.join([manufacturer.name for manufacturer in self.manufacturer.all()[:3]])
-
-    # display_manufacturer.short_description = 'Manufacturer'
 
     def get_absolute_url(self):
         """Returns the url to access a particular car configuration."""
