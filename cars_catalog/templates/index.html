@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Auto Portal Home</h1>
+
+  <p>Welcome to <em>Auto Portal</em>, a very basic Django website developed as a tutorial Project.</p>
+
+<h2>Dynamic content</h2>
+
+  <p>The portal has the following record counts:</p>
+  <ul>
+    <li><strong>Manufacturers:</strong> {{ num_manufacturers }}</li>
+    <li><strong>Car configurations:</strong> {{ num_car_configurations }}</li>
+    <li><strong>Car instances:</strong> {{ num_car_instances }}</li>
+  </ul>
+
+{% endblock %}

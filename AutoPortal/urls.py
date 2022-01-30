@@ -29,8 +29,16 @@ urlpatterns = [
 
 urlpatterns += [
     path('cars_catalog/', include('cars_catalog.urls')),
-    path('', RedirectView.as_view(url='index', permanent=True)),
-    path('spare_parts_catalog/', include('spare_parts_catalog.urls'))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+urlpatterns += [
+    path('', RedirectView.as_view(url='/cars_catalog/', permanent=False)),
+# Redirect from root dosen't work. Will find workaround later
+]
+
+urlpatterns += [
+    path('spare_parts_catalog/', include('spare_parts_catalog.urls')),
+]

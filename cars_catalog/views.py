@@ -22,5 +22,5 @@ def index(request):
         request,
         'index.html',
         context={'num_manufacturers': num_manufacturers, 'num_car_configurations': num_car_configurations,
-                 'num_car_instances': num_car_instances, 'num_visits': num_visits}
+                 'num_car_instances': num_car_instances, 'num_visits': num_visits},
     )
